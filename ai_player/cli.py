@@ -1,4 +1,4 @@
-"""Command-line entry point: `python -m ai_player ...`"""
+"""Command-line entry point. Run it with `python -m ai_player ...`"""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "--offline",
         action="store_true",
-        help="Never call the Anthropic API — use the built-in heuristic guesser/artist instead",
+        help="Never call the Anthropic API, use the built-in heuristic guesser/artist instead",
     )
     p.add_argument("--model", default="claude-sonnet-5", help="Anthropic model to use")
     p.add_argument(
@@ -98,7 +98,7 @@ def main(argv: list[str] | None = None) -> None:
         pass
     except OSError as e:
         print(
-            f"Couldn't reach {config.server_url} — is the PictionaryServer running there? "
+            f"Couldn't reach {config.server_url}. Is the PictionaryServer running there? "
             f"(./start-pictionary-server.sh in Doodle-Room)\n{e}",
             file=sys.stderr,
         )

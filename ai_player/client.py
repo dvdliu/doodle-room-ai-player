@@ -1,6 +1,6 @@
-"""Thin async WebSocket transport — connect, send JSON, iterate parsed messages.
+"""Thin async WebSocket transport. Connects, sends JSON, iterates parsed messages.
 
-Deliberately dumb: no game knowledge lives here. See `bot.py` for that.
+Deliberately dumb. No game knowledge lives here. See `bot.py` for that.
 """
 
 from __future__ import annotations

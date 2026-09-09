@@ -134,9 +134,9 @@ class PictionaryBot:
 
         drawer_name = ev.get("drawerName")
         if self._is_drawer():
-            log.info("Round %s/%s — my turn to draw!", ev.get("round"), ev.get("totalRounds"))
+            log.info("Round %s of %s, my turn to draw!", ev.get("round"), ev.get("totalRounds"))
         else:
-            log.info("Round %s/%s — %s is drawing", ev.get("round"), ev.get("totalRounds"), drawer_name)
+            log.info("Round %s of %s, %s is drawing", ev.get("round"), ev.get("totalRounds"), drawer_name)
 
     async def _on_word_options(self, ev: dict) -> None:
         options = ev.get("words", [])
@@ -196,7 +196,7 @@ class PictionaryBot:
     async def _on_turn_end(self, ev: dict) -> None:
         self._cancel_turn_tasks()
         self.phase = "TURN_END"
-        log.info("Turn over (%s). The word was: %s", ev.get("reason"), ev.get("word"))
+        log.info("Turn over (%s). The word was %s", ev.get("reason"), ev.get("word"))
 
     async def _on_game_over(self, ev: dict) -> None:
         self._cancel_turn_tasks()

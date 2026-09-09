@@ -1,7 +1,7 @@
 """Strategies for turning a word into a stroke plan (a list of (x, y) point
 lists in 0..1 canvas space) the bot can draw. `ClaudeStrokeArtist` asks Claude
-to design a sketch; `FallbackShapeArtist` guarantees a turn always produces
-something."""
+to design a sketch, and `FallbackShapeArtist` guarantees a turn always
+produces something."""
 
 from __future__ import annotations
 
@@ -39,8 +39,8 @@ class ClaudeStrokeArtist(Artist):
 
     async def pick_word(self, options: Sequence[str]) -> str:
         # Shorter words are cheaper to sketch clearly in the time budget and
-        # tend to be more concrete/drawable (Doodle Room's word bank skews
-        # longer for its "hard" category) — no API call needed for this part.
+        # tend to be more concrete and drawable (Doodle Room's word bank skews
+        # longer for its "hard" category). No API call is needed for this part.
         return min(options, key=len)
 
     async def plan_strokes(self, word: str) -> List[Stroke]:
@@ -53,7 +53,7 @@ class ClaudeStrokeArtist(Artist):
             f"- Each inner list is one continuous pen stroke (points connected in order).\n"
             f"- Use at most {_MAX_STROKES} strokes and at most {_MAX_POINTS_PER_STROKE} points per stroke.\n"
             f"- Use simple recognizable shapes (lines, curves, circles approximated by points). "
-            f"No text or letters — this must be guessed visually."
+            f"No text or letters. This must be guessed visually."
         )
         response = await self._client.messages.create(
             model=self._model,
@@ -69,7 +69,7 @@ class ClaudeStrokeArtist(Artist):
 
 
 class FallbackShapeArtist(Artist):
-    """No API calls — draws a generic placeholder shape so a turn never stalls."""
+    """No API calls. Draws a generic placeholder shape so a turn never stalls."""
 
     def __init__(self, rng: Optional[random.Random] = None):
         self._rng = rng or random.Random()
@@ -81,7 +81,7 @@ class FallbackShapeArtist(Artist):
         return self.plan_strokes_sync(word)
 
     def plan_strokes_sync(self, word: str) -> List[Stroke]:
-        # A generic house-ish/blob shape. Not meant to be a good guess-inducer —
+        # A generic house-ish/blob shape. Not meant to be a good guess-inducer,
         # just something that keeps the game moving when the real artist is
         # unavailable or returns something unusable.
         return [

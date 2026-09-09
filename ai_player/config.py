@@ -15,9 +15,9 @@ class BotConfig:
     room_code: Optional[str] = None
     create_room: bool = False
 
-    # Anthropic API. If offline=True, the bot never calls the API — it uses the
-    # built-in heuristic guesser/artist instead, which is handy for demos, tests,
-    # or trying the bot without burning API credits.
+    # Anthropic API. If offline=True, the bot never calls the API and instead
+    # uses the built-in heuristic guesser/artist, which is handy for demos,
+    # tests, or trying the bot without burning API credits.
     offline: bool = False
     anthropic_api_key: Optional[str] = None
     model: str = "claude-sonnet-5"
@@ -32,8 +32,8 @@ class BotConfig:
     min_seconds_before_first_guess: float = 2.5
     max_guesses_per_turn: int = 25
 
-    # Drawing pace: spend at most this fraction of the turn's drawSeconds actually
-    # sketching, leaving the rest as a buffer against slow strokes/lag.
+    # Drawing pace. Spend at most this fraction of the turn's drawSeconds actually
+    # sketching, leaving the rest as a buffer against slow strokes or lag.
     draw_time_budget_fraction: float = 0.75
 
     extra_log_events: bool = field(default=False)

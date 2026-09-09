@@ -5,8 +5,8 @@ from ai_player.guesser import HeuristicGuesser, _clean_guess, _non_space_length
 
 
 def test_heuristic_guesser_respects_mask_length():
-    # The real server masks a hidden word as one underscore per letter, no
-    # separators (see GameRoom.maskWord) — "___" for a 3-letter word.
+    # The real server masks a hidden word as one underscore per letter, with no
+    # separators (see GameRoom.maskWord), so "___" for a 3-letter word.
     guesser = HeuristicGuesser(vocab=["cat", "house", "sun"], rng=random.Random(0))
     guess = asyncio.run(guesser.guess(b"", "___", []))
     assert guess in ("cat", "sun")

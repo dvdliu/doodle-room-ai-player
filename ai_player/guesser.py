@@ -1,6 +1,6 @@
 """Strategies for turning a canvas snapshot into a guess. `ClaudeVisionGuesser`
-is the real thing; `HeuristicGuesser` is a zero-cost offline fallback used in
---offline mode and in tests."""
+is the real thing, and `HeuristicGuesser` is a zero-cost offline fallback used
+in --offline mode and in tests."""
 
 from __future__ import annotations
 
@@ -21,8 +21,8 @@ _FALLBACK_VOCAB = [
 
 def _non_space_length(masked_word: str) -> int:
     """Letter count of a masked word, e.g. 'a__le' -> 5. Spaces (revealed as-is
-    for multi-word phrases) don't count as letters; underscores do, since each
-    stands in for one still-hidden letter."""
+    for multi-word phrases) don't count as letters, but underscores do, since
+    each stands in for one still-hidden letter."""
     return sum(1 for c in masked_word if c != " ")
 
 
@@ -56,17 +56,17 @@ class ClaudeVisionGuesser(Guesser):
         length_hint = f"It's {_non_space_length(masked_word)} letters long." if masked_word else ""
         pattern_hint = ""
         if masked_word and "_" in masked_word and any(c != "_" for c in masked_word):
-            pattern_hint = f" The revealed letter pattern so far is: {masked_word}"
+            pattern_hint = f" The revealed letter pattern so far looks like {masked_word}."
 
-        avoid = f" Do not repeat any of these already-wrong guesses: {', '.join(already_tried)}." if already_tried else ""
+        avoid = f" Already-tried wrong guesses to avoid repeating are {', '.join(already_tried)}." if already_tried else ""
 
         prompt = (
             "You're playing Pictionary as a guesser. The image is someone's in-progress "
             "sketch of a single English word or short common phrase. "
             f"{length_hint}{pattern_hint}{avoid} "
-            "Reply with ONLY your single best-guess word or short phrase — no punctuation, "
-            "no explanation, no extra words. If the sketch is too sparse to tell yet, reply "
-            "with exactly: PASS"
+            "Reply with ONLY your single best-guess word or short phrase, with no punctuation, "
+            "no explanation, and no extra words. If the sketch is too sparse to tell yet, reply "
+            "with exactly PASS."
         )
 
         response = await self._client.messages.create(
@@ -98,7 +98,7 @@ class ClaudeVisionGuesser(Guesser):
 
 
 class HeuristicGuesser(Guesser):
-    """Offline fallback: picks a random word matching the known mask length/letters."""
+    """Offline fallback. Picks a random word matching the known mask length and letters."""
 
     def __init__(self, vocab: Optional[Sequence[str]] = None, rng: Optional[random.Random] = None):
         self._vocab = list(vocab) if vocab else list(_FALLBACK_VOCAB)
@@ -138,7 +138,7 @@ def _clean_guess(text: str) -> Optional[str]:
     text = text.strip().strip(".!?\"'").strip()
     if not text or text.upper() == "PASS":
         return None
-    # Guard against the model ignoring instructions and returning a sentence —
-    # keep only the first line/clause, capped to a sane length.
+    # Guard against the model ignoring instructions and returning a sentence.
+    # Keep only the first line or clause, capped to a sane length.
     text = text.splitlines()[0].split(".")[0].strip()
     return text[:60] or None

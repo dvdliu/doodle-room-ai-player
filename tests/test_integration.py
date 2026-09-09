@@ -14,7 +14,7 @@ from ai_player.guesser import HeuristicGuesser
 
 
 async def _mock_server_handler(ws, received: list[dict]):
-    await ws.recv()  # CREATE_ROOM from the bot — ignored, content doesn't matter here
+    await ws.recv()  # CREATE_ROOM from the bot, ignored since content doesn't matter here
 
     async def send(payload: dict) -> None:
         await ws.send(json.dumps(payload))
