@@ -1,9 +1,6 @@
-"""A virtual canvas that replays the game's DRAW / LINE / CLEAR events.
-
-Mirrors the rendering logic in pictionary.html's `applyDraw` / `applyLine` /
-`clearCanvas` closely enough to produce a reasonable raster snapshot for a
-vision model to look at — it doesn't need to be pixel-perfect, just legible.
-"""
+"""A virtual canvas that replays the game's DRAW / LINE / CLEAR events,
+mirroring pictionary.html's rendering closely enough to give a vision model a
+legible snapshot."""
 
 from __future__ import annotations
 

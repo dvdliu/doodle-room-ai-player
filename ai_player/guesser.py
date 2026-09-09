@@ -1,10 +1,6 @@
-"""Strategies for turning a canvas snapshot into a guess.
-
-`ClaudeVisionGuesser` is the real thing; `HeuristicGuesser` is a zero-cost,
-zero-API-key fallback used in --offline mode and in tests, so the rest of the
-bot's logic (pacing, dedup, turn handling) can be exercised without hitting
-the network.
-"""
+"""Strategies for turning a canvas snapshot into a guess. `ClaudeVisionGuesser`
+is the real thing; `HeuristicGuesser` is a zero-cost offline fallback used in
+--offline mode and in tests."""
 
 from __future__ import annotations
 

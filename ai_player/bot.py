@@ -1,10 +1,6 @@
 """Game-state machine tying the WebSocket connection to the guesser/artist.
-
-One PictionaryBot instance plays one connection's worth of the game: it tracks
-whatever the server tells it (phase, current drawer, masked word, scores),
-drives a background "keep guessing" loop while someone else draws, and drives
-a background "execute the stroke plan" loop on its own turn.
-"""
+One PictionaryBot instance tracks server-driven game state and drives
+background guessing/drawing loops for its turn."""
 
 from __future__ import annotations
 

@@ -1,10 +1,5 @@
 """End-to-end test against a scripted mock PictionaryServer over a real
-WebSocket, exercising client.py + bot.py together (not just bot._handle()).
-
-We can't run the actual Java PictionaryServer in this environment, so this
-mock replays the exact message shapes documented in Doodle-Room's README —
-see the docstring in ai_player/client.py for where those come from.
-"""
+WebSocket, exercising client.py + bot.py together (not just bot._handle())."""
 
 import asyncio
 import json

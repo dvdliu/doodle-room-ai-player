@@ -1,12 +1,7 @@
-"""Strategies for turning a word into a stroke plan the bot can draw.
-
-A "stroke plan" is a list of strokes; each stroke is a list of (x, y) points in
-0..1 normalized canvas space, in pen-down order. `ClaudeStrokeArtist` asks
-Claude to *design* a simple line-art sketch of the word — this is the bot's
-drawer role, mirrored against `ClaudeVisionGuesser` for the guesser role.
-`FallbackShapeArtist` guarantees the turn always produces *something*, even if
-the API call fails or the word is too abstract to sketch.
-"""
+"""Strategies for turning a word into a stroke plan (a list of (x, y) point
+lists in 0..1 canvas space) the bot can draw. `ClaudeStrokeArtist` asks Claude
+to design a sketch; `FallbackShapeArtist` guarantees a turn always produces
+something."""
 
 from __future__ import annotations
 
