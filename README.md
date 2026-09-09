@@ -11,8 +11,8 @@ itself — and plays both roles:
   sketch of the word as JSON, then executes that plan as real `DRAW` events, paced to
   fit inside the turn's time limit.
 
-Both roles are two applications of the same idea — one Claude call turns pixels into a
-word, the other turns a word into pixels — over a state machine that tracks turns,
+Both roles are two applications of the same idea. One Claude call turns pixels into a
+word, the other turns a word into pixels. This is done over a state machine that tracks turns,
 scoring, and pacing so the bot behaves like a (reasonably) well-mannered player.
 
 ## Setup
@@ -80,7 +80,7 @@ against the source in `com.pictionary.*`.
 
 On `WORD_SELECTED` (and not the drawer), the bot starts a background loop: wait a
 couple seconds for something to appear, snapshot the canvas, ask Claude for a guess,
-send it as `CHAT_GUESS`, then wait out a cooldown before trying again — repeating until
+send it as `CHAT_GUESS`, then wait out a cooldown before trying again, repeating until
 it guesses correctly, the turn ends, or it hits a max-attempts cap. A `LETTER_REVEAL`
 wakes the loop early to retry sooner with the new information, and it's fed a running
 list of other players' wrong guesses so it doesn't repeat them.
@@ -100,7 +100,7 @@ pip install -r requirements-dev.txt
 python -m pytest
 ```
 
-No API key or running server needed — `test_canvas.py`/`test_guesser.py`/`test_artist.py`
+`test_canvas.py`/`test_guesser.py`/`test_artist.py`
 cover the pure logic (stroke replay, mask-based filtering, stroke-plan JSON parsing),
 `test_bot.py` drives the state machine with a fake connection, and
 `test_integration.py` runs the bot against a real WebSocket connection to a small
