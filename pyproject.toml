@@ -1,0 +1,8 @@
+[project]
+name = "doodle-room-ai-player"
+version = "0.1.0"
+description = "An AI player for Doodle Room's Pictionary game"
+requires-python = ">=3.9"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
