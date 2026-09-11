@@ -1,5 +1,7 @@
 # Doodle Room AI Player
 
+*Written with the help of Claude.*
+
 An AI player for [Doodle Room](../Doodle-Room)'s Pictionary game mode. It connects to a
 running `PictionaryServer` as a regular WebSocket player, with no changes to Doodle Room
 itself, and plays both roles.

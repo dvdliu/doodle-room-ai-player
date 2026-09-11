@@ -5,3 +5,4 @@ __pycache__/
 .env
 *.png
 !demo/*.png
+venv/

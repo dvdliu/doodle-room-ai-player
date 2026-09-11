@@ -255,7 +255,6 @@ class PictionaryBot:
                 await self._plan_task
             strokes = self._planned_strokes or FallbackShapeArtist().plan_strokes_sync(self._pending_word or "")
 
-            width, height = self.config.canvas_size
             budget_seconds = max(5.0, self.draw_seconds * self.config.draw_time_budget_fraction)
             total_points = sum(len(s) for s in strokes) or 1
             delay = max(0.03, min(0.5, budget_seconds / total_points))
@@ -263,11 +262,15 @@ class PictionaryBot:
             for stroke in strokes:
                 first = True
                 for (nx, ny) in stroke:
+                    # x/y go over the wire as 0..1 fractions of the *receiving*
+                    # browser's own canvas size (see pictionary.html's applyDraw,
+                    # which does ev.x * canvas.width) — not pixels in our virtual
+                    # canvas's coordinate space, which is unrelated to theirs.
                     await self.connection.send(
                         {
                             "type": "DRAW",
-                            "x": round(nx * width, 1),
-                            "y": round(ny * height, 1),
+                            "x": round(nx, 4),
+                            "y": round(ny, 4),
                             "color": "#1a1a1e",
                             "brushSize": 5,
                             "startStroke": first,

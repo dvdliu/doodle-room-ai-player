@@ -58,7 +58,6 @@ class ClaudeStrokeArtist(Artist):
         response = await self._client.messages.create(
             model=self._model,
             max_tokens=2000,
-            temperature=0.6,
             messages=[{"role": "user", "content": prompt}],
         )
         text = "".join(

@@ -72,7 +72,6 @@ class ClaudeVisionGuesser(Guesser):
         response = await self._client.messages.create(
             model=self._model,
             max_tokens=20,
-            temperature=0.4,
             messages=[
                 {
                     "role": "user",

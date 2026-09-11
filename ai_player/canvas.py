@@ -43,7 +43,9 @@ class VirtualCanvas:
         return (max(0.0, min(self.width, x)), max(0.0, min(self.height, y)))
 
     def _apply_draw(self, ev: dict) -> None:
-        x, y = self._clamp(float(ev.get("x", 0)), float(ev.get("y", 0)))
+        # x/y arrive as 0..1 fractions of the sender's own canvas (see
+        # pictionary.html's mouse handlers), not pixels in our coordinate space.
+        x, y = self._clamp(float(ev.get("x", 0)) * self.width, float(ev.get("y", 0)) * self.height)
         color = ev.get("color") or "#1a1a1e"
         width = max(1, round(float(ev.get("brushSize", 4) or 4)))
 
@@ -64,8 +66,8 @@ class VirtualCanvas:
         self.last_activity = time.monotonic()
 
     def _apply_line(self, ev: dict) -> None:
-        x1, y1 = self._clamp(float(ev.get("x", 0)), float(ev.get("y", 0)))
-        x2, y2 = self._clamp(float(ev.get("x2", 0)), float(ev.get("y2", 0)))
+        x1, y1 = self._clamp(float(ev.get("x", 0)) * self.width, float(ev.get("y", 0)) * self.height)
+        x2, y2 = self._clamp(float(ev.get("x2", 0)) * self.width, float(ev.get("y2", 0)) * self.height)
         color = ev.get("color") or "#1a1a1e"
         width = max(1, round(float(ev.get("brushSize", 4) or 4)))
 
